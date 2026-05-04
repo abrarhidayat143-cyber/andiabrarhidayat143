@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Services\ProductService; // Pastikan ini sesuai folder service kamu
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
@@ -17,16 +16,14 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data yang masuk
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|integer',
             'description' => 'nullable|string',
         ]);
 
-        // Simpan lewat Model (atau lewat Service jika logikanya di sana)
-        Product::create($validated);
+        $this->productService->createProduct($validated);
 
-        return response()->json(['message' => 'Produk berhasil ditambah!'], 201);
+        return response()->json(['message' => 'Tugas 3: Produk berhasil disimpan!'], 201);
     }
 }
